@@ -13,5 +13,5 @@ test('POST /users/login - valid credentials returns token', async ({ request}) =
     const responseBody = await response.json();
 
     expect(responseBody.access_token).toBeDefined();
-    expect(responseBody.token_type).toBe('Bearer');
+    expect(responseBody.token_type).toBe('bearer');
 });
