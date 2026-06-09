@@ -9,4 +9,9 @@ test('POST /users/login - valid credentials returns token', async ({ request}) =
     });
 
     expect(response.status()).toBe(200);
+
+    const responseBody = await response.json();
+
+    expect(responseBody.access_token).toBeDefined();
+    expect(responseBody.token_type).toBe('Bearer');
 });
