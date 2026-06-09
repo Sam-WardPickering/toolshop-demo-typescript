@@ -30,6 +30,6 @@ test('POST /users/login - incorrect password', async ({ request}) => {
         },
     });
 
-    // status = 401
+    expect(response.status()).toBe(401);
     // response json = { error: 'Unauthorized' }
 });
