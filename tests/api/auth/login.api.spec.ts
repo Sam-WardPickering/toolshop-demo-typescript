@@ -20,3 +20,16 @@ test('POST /users/login - valid credentials returns token', async ({ request}) =
     expect(responseBody.access_token).toBeDefined();
     expect(responseBody.token_type).toBe('bearer');
 });
+
+
+test('POST /users/login - incorrect password', async ({ request}) => {
+    const response = await request.post('/users/login', {
+        data: {
+            email: 'customer@practicesoftwaretesting.com',
+            password: 'welcome67',
+        },
+    });
+
+    // status = 401
+    // response json = { error: 'Unauthorized' }
+});
