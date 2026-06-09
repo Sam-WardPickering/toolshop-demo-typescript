@@ -7,6 +7,6 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   reporter: 'html',
   use: {
-    baseURL: 'https://practicesoftwaretesting.com',
+    baseURL: 'https://api.practicesoftwaretesting.com',
   },
 });
