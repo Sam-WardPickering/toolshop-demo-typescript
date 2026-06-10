@@ -5,6 +5,10 @@ interface LoginResponse {
     token_type: string;
 };
 
+interface LoginErrorResponse {
+    error: string;
+}
+
 test('POST /users/login - valid credentials returns token', async ({ request}) => {
     const response = await request.post('/users/login', {
         data: {
@@ -31,5 +35,7 @@ test('POST /users/login - incorrect password', async ({ request}) => {
     });
 
     expect(response.status()).toBe(401);
+    
+    const responseJson = await response.json();
     // response json = { error: 'Unauthorized' }
 });
