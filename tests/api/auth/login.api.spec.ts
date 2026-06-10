@@ -39,3 +39,8 @@ test('POST /users/login - incorrect password', async ({ request}) => {
     const responseJson: LoginErrorResponse = await response.json();
     expect(responseJson.error).toBe('Unauthorized');
 });
+
+
+test('POST /users/login - incorrect email', async ({ request}) => {
+    
+});
