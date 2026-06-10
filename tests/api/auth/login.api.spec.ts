@@ -69,3 +69,8 @@ test('POST /users/login - no email or password values', async ({ request}) => {
     const responseJson: LoginErrorResponse = await response.json();
     expect(responseJson.error).toBe('Invalid login request');
 });
+
+
+test('POST /users/login - invalid email format', async ({ request}) => {
+ 
+});
