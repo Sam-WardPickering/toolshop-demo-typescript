@@ -54,3 +54,18 @@ test('POST /users/login - incorrect email', async ({ request}) => {
     const responseJson: LoginErrorResponse = await response.json();
     expect(responseJson.error).toBe('Unauthorized');
 });
+
+
+test('POST /users/login - no email or password values', async ({ request}) => {
+    const response = await request.post('/users/login', {
+        data: {
+            email: '',
+            password: ''
+        },
+    });
+
+    // expect(response.status()).toBe(401);
+
+    // const responseJson: LoginErrorResponse = await response.json();
+    // expect(responseJson.error).toBe('Unauthorized');
+});
