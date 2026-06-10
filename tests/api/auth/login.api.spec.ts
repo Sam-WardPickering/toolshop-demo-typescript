@@ -64,8 +64,8 @@ test('POST /users/login - no email or password values', async ({ request}) => {
         },
     });
 
-    // expect(response.status()).toBe(401);
+    expect(response.status()).toBe(401);
 
-    // const responseJson: LoginErrorResponse = await response.json();
-    // expect(responseJson.error).toBe('Unauthorized');
+    const responseJson: LoginErrorResponse = await response.json();
+    expect(responseJson.error).toBe('Invalid login request');
 });
