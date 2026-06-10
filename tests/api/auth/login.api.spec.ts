@@ -73,14 +73,14 @@ test('POST /users/login - no email or password values', async ({ request}) => {
 
 test('POST /users/login - invalid email format', async ({ request}) => {
     const response = await request.post('/users/login', {
-    data: {
-        email: 'notanemail!',
-        password: 'welcome01'
-    },
+        data: {
+            email: 'notanemail!',
+            password: 'welcome01'
+        },
     });
 
-    // expect(response.status()).toBe(401);
+    expect(response.status()).toBe(401);
 
-    // const responseJson: LoginErrorResponse = await response.json();
-    // expect(responseJson.error).toBe('Invalid login request');
+    const responseJson: LoginErrorResponse = await response.json();
+    expect(responseJson.error).toBe('Unauthorized');
 });
