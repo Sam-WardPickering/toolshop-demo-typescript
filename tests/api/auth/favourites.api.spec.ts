@@ -5,6 +5,10 @@ interface LoginResponse {
     token_type: string;
 };
 
+interface Product {
+   
+}
+
 test('GET /favorites - retrieves all favourites', async ({ request }) => {
       const loginResponse = await request.post('/users/login', {
             data: {
@@ -26,6 +30,6 @@ test('GET /favorites - retrieves all favourites', async ({ request }) => {
             },
         });
 
-        console.log(favorites);
+        expect(favorites.status()).toBe(200);
         console.log(await favorites.json());
 });
