@@ -26,26 +26,33 @@ interface FavoriteItem {
 }
 
 test('GET /favorites - retrieves all favourites', async ({ request }) => {
-      const loginResponse = await request.post('/users/login', {
-            data: {
-                email: 'customer@practicesoftwaretesting.com',
-                password: 'welcome01',
-            },
-        });
-    
-        expect(loginResponse.status()).toBe(200);
-    
-        const responseBody: LoginResponse = await loginResponse.json();
-        expect(responseBody.access_token).toBeDefined();
+    const loginResponse = await request.post('/users/login', {
+        data: {
+            email: 'customer@practicesoftwaretesting.com',
+            password: 'welcome01',
+        },
+    });
 
-        const token = responseBody.access_token;
+    expect(loginResponse.status()).toBe(200);
 
-        const favorites = await request.get('/favorites', {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+    const responseBody: LoginResponse = await loginResponse.json();
+    expect(responseBody.access_token).toBeDefined();
 
-        expect(favorites.status()).toBe(200);
-        console.log(await favorites.json());
+    const token = responseBody.access_token;
+
+    const favorites = await request.get('/favorites', {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    expect(favorites.status()).toBe(200);
+
+    const favouritesBody: FavoriteItem[] = await favorites.json();
+
+    expect(favouritesBody.length).toBeGreaterThan(0);
+    expect(favouritesBody[0].id).toBeDefined();
+    expect(favouritesBody[0].product.name).toBeDefined();
+    expect(favouritesBody[0].product.price).toBeGreaterThan(0);
+        
 });
