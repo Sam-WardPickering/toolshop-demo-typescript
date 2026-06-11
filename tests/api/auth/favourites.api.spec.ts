@@ -16,4 +16,16 @@ test('GET /favorites - retrieves all favourites', async ({ request }) => {
         expect(loginResponse.status()).toBe(200);
     
         const responseBody: LoginResponse = await loginResponse.json();
+        expect(responseBody.access_token).toBeDefined();
+
+        const token = responseBody.access_token;
+
+        const favorites = await request.get('/favorites', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        console.log(favorites);
+        console.log(await favorites.json());
 });
