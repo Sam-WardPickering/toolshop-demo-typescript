@@ -38,3 +38,14 @@ test('GET /favorites - retrieves all favourites', async ({ request, token }) => 
     expect(favouritesBody[0].product.price).toBeGreaterThan(0);
         
 });
+
+
+test('GET /favourites - 401 when user not authenticated', async ({ request }) => {
+    const favorites = await request.get('/favorites', {
+        headers: {},
+    });
+
+    expect(favorites.status()).toBe(401);
+    expect((await favorites.json()).message).toBe('Unauthorized');
+
+});
