@@ -1,10 +1,5 @@
 import { test, expect } from '../../fixtures/auth.fixture';
 
-interface LoginResponse {
-    access_token: string;
-    token_type: string;
-};
-
 interface Product {
     id: string
     name: string
