@@ -50,7 +50,13 @@ test('GET /favourites - 401 when user not authenticated', async ({ request }) =>
 
 
 test('POST /favourites - store new favourite', async ({ request, token }) => {
-    //get product 
+    //Get products
+    const productsResponse = await request.get('/products');
+    expect(productsResponse.status()).toBe(200);
+
+    // Get first returned product
+    const product = (await productsResponse.json()).data[0];
+
 
     // store product ID
 
