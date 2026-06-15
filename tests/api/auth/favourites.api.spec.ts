@@ -57,10 +57,18 @@ test('POST /favourites - store new favourite', async ({ request, token }) => {
     // Get first returned product
     const product = (await productsResponse.json()).data[0];
 
-
-    // store product ID
-
     // Add product to favourites
+    const response = await request.post('/favorites', {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        data: {
+            product_id: product.id,
+        },
+    });
+
+    console.log(await response.json());
+    
 
     // Verify product is added to favourites
 });
