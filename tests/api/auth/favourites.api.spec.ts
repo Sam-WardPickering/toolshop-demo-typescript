@@ -47,3 +47,14 @@ test('GET /favourites - 401 when user not authenticated', async ({ request }) =>
     expect((await favorites.json()).message).toBe('Unauthorized');
 
 });
+
+
+test('POST /favourites - store new favourite', async ({ request, token }) => {
+    //get product 
+
+    // store product ID
+
+    // Add product to favourites
+
+    // Verify product is added to favourites
+});
