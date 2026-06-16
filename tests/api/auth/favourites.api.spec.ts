@@ -49,7 +49,7 @@ test('GET /favourites - 401 when user not authenticated', async ({ request }) =>
 });
 
 
-test.only('POST /favourites - store new favourite', async ({ request, token }) => {
+test('POST /favourites - store new favourite', async ({ request, token }) => {
     //Get products
     const productsResponse = await request.get('/products');
     expect(productsResponse.status()).toBe(200);
