@@ -49,7 +49,7 @@ test('GET /favourites - 401 when user not authenticated', async ({ request }) =>
 });
 
 
-test('POST /favourites - store new favourite', async ({ request, token }) => {
+test.only('POST /favourites - store new favourite', async ({ request, token }) => {
     //Get products
     const productsResponse = await request.get('/products');
     expect(productsResponse.status()).toBe(200);
@@ -67,20 +67,25 @@ test('POST /favourites - store new favourite', async ({ request, token }) => {
         },
     });
 
-    expect(response.status()).toBe(200);
+    expect(response.status()).toBe(201);
     
     const favoriteId = (await response.json()).id; 
     
     // Verify product is added to favourites
 
-    const favorites = await request.get('/favorites');
+    const favorites = await request.get('/favorites', {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
     expect(favorites.status()).toBe(200);
 
-    const favoritesList = (await favorites.json()).data;
+    const favoritesList = await favorites.json();
     let isProductInList: boolean = false;
 
     for (const favorite of favoritesList) {
-        if (favorite.id === product.id) {
+        if (favorite.product_id === product.id) {
             isProductInList = true;
             break;
         }

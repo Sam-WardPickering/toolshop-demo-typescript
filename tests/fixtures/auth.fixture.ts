@@ -8,7 +8,7 @@ export const test = base.extend<AuthFixtures>({
   token: async ({ request }, use) => {
     const response = await request.post('/users/login', {
       data: {
-        email: 'customer@practicesoftwaretesting.com',
+        email: 'customer2@practicesoftwaretesting.com',
         password: 'welcome01',
       },
     });
