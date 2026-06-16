@@ -67,8 +67,25 @@ test('POST /favourites - store new favourite', async ({ request, token }) => {
         },
     });
 
-    console.log(await response.json());
+    expect(response.status()).toBe(200);
     
-
     // Verify product is added to favourites
+
+    const favorites = await request.get('/favorites');
+    expect(favorites.status()).toBe(200);
+
+    const favoritesList = (await favorites.json()).data;
+    let isProductInList: boolean = false;
+
+    for (const favorite of favoritesList) {
+        if (favorite.id === product.id) {
+            isProductInList = true;
+            return;
+        }
+    };
+
+    expect(isProductInList).toBe(true);
+
+    // Delete favorite from list
+
 });
