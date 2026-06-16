@@ -68,8 +68,14 @@ test.only('POST /favourites - store new favourite', async ({ request, token }) =
     });
 
     expect(response.status()).toBe(201);
+
+    const favorite = await response.json();
+
+    expect(favorite.product_id).toBeDefined();
+    expect(favorite.user_id).toBeDefined();
+    expect(favorite.id).toBeDefined();
     
-    const favoriteId = (await response.json()).id; 
+    const favoriteId = favorite.id; 
     
     // Verify product is added to favourites
 
