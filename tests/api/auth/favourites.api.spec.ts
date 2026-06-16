@@ -26,6 +26,27 @@ interface NewFavoriteResponse {
     user_id: string
 }
 
+let seededFavoriteId: string;
+let seededProductId: string;
+
+test.beforeAll(async ({ request, token }) => {
+    const productsResponse = await request.get('/products');
+    const product = (await productsResponse.json()).data[0];
+    seededProductId = product.id;
+
+    const response = await request.post('/favorites', {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        data: {
+            product_id: seededProductId,
+        },
+    });
+
+    const body: NewFavoriteResponse = await response.json();
+    seededFavoriteId = body.id;
+});
+
 test('GET /favorites - retrieves all favourites', async ({ request, token }) => {
 
     const favorites = await request.get('/favorites', {
@@ -94,7 +115,7 @@ test('POST /favourites - store new favourite', async ({ request, token }) => {
     expect(favorites.status()).toBe(200);
 
     const favoritesList: FavoriteItem[] = await favorites.json();
-    
+
     const isProductInList = favoritesList.some(f => f.product_id === product.id);
     expect(isProductInList).toBe(true);
 

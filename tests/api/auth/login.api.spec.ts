@@ -12,7 +12,7 @@ interface LoginErrorResponse {
 test('POST /users/login - valid credentials returns token', async ({ request}) => {
     const response = await request.post('/users/login', {
         data: {
-            email: 'customer@practicesoftwaretesting.com',
+            email: 'customer2@practicesoftwaretesting.com',
             password: 'welcome01',
         },
     });
@@ -29,7 +29,7 @@ test('POST /users/login - valid credentials returns token', async ({ request}) =
 test('POST /users/login - incorrect password', async ({ request}) => {
     const response = await request.post('/users/login', {
         data: {
-            email: 'customer@practicesoftwaretesting.com',
+            email: 'customer2@practicesoftwaretesting.com',
             password: 'welcome67',
         },
     });
