@@ -26,116 +26,119 @@ interface NewFavoriteResponse {
     user_id: string
 }
 
-let seededFavoriteId: string;
-let seededProductId: string;
+test.describe('Favorites', () => {
 
-test.beforeAll(async ({ request, token }) => {
-    const productsResponse = await request.get('/products');
-    const product = (await productsResponse.json()).data[0];
-    seededProductId = product.id;
+    let seededFavoriteId: string;
+    let seededProductId: string;
 
-    const response = await request.post('/favorites', {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-        data: {
-            product_id: seededProductId,
-        },
+    test.beforeAll(async ({ request, token }) => {
+        const productsResponse = await request.get('/products');
+        const product = (await productsResponse.json()).data[0];
+        seededProductId = product.id;
+
+        const response = await request.post('/favorites', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: {
+                product_id: seededProductId,
+            },
+        });
+
+        const body: NewFavoriteResponse = await response.json();
+        seededFavoriteId = body.id;
     });
 
-    const body: NewFavoriteResponse = await response.json();
-    seededFavoriteId = body.id;
-});
 
-
-test.afterAll(async ({ request, token }) => {
-    await request.delete(`/favorites/${seededFavoriteId}`, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-});
-
-
-test('GET /favorites - retrieves all favourites', async ({ request, token }) => {
-
-    const favorites = await request.get('/favorites', {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
+    test.afterAll(async ({ request, token }) => {
+        await request.delete(`/favorites/${seededFavoriteId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
     });
 
-    expect(favorites.status()).toBe(200);
 
-    const favouritesBody: FavoriteItem[] = await favorites.json();
+    test('GET /favorites - retrieves all favourites', async ({ request, token }) => {
 
-    expect(favouritesBody.length).toBeGreaterThan(0);
-    expect(favouritesBody[0].id).toBeDefined();
-    expect(favouritesBody[0].product.name).toBeDefined();
-    expect(favouritesBody[0].product.price).toBeGreaterThan(0);
+        const favorites = await request.get('/favorites', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        expect(favorites.status()).toBe(200);
+
+        const favouritesBody: FavoriteItem[] = await favorites.json();
+
+        expect(favouritesBody.length).toBeGreaterThan(0);
+        expect(favouritesBody[0].id).toBeDefined();
+        expect(favouritesBody[0].product.name).toBeDefined();
+        expect(favouritesBody[0].product.price).toBeGreaterThan(0);
+            
+    });
+
+
+    test('GET /favourites - 401 when user not authenticated', async ({ request }) => {
+        const favorites = await request.get('/favorites');
+
+        expect(favorites.status()).toBe(401);
+        expect((await favorites.json()).message).toBe('Unauthorized');
+
+    });
+
+
+    test('POST /favourites - store new favourite', async ({ request, token }) => {
+        //Get products
+        const productsResponse = await request.get('/products');
+        expect(productsResponse.status()).toBe(200);
+
+        // Get first returned product
+        const product = (await productsResponse.json()).data[0];
+
+        // Add product to favourites
+        const response = await request.post('/favorites', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: {
+                product_id: product.id,
+            },
+        });
+
+        expect(response.status()).toBe(201);
+
+        const favorite: NewFavoriteResponse = await response.json();
+
+        expect(favorite.product_id).toBeDefined();
+        expect(favorite.user_id).toBeDefined();
+        expect(favorite.id).toBeDefined();
         
-});
+        const favoriteId = favorite.id; 
+        
+        // Verify product is added to favourites
 
+        const favorites = await request.get('/favorites', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
 
-test('GET /favourites - 401 when user not authenticated', async ({ request }) => {
-    const favorites = await request.get('/favorites');
+        expect(favorites.status()).toBe(200);
 
-    expect(favorites.status()).toBe(401);
-    expect((await favorites.json()).message).toBe('Unauthorized');
+        const favoritesList: FavoriteItem[] = await favorites.json();
 
-});
+        const isProductInList = favoritesList.some(f => f.product_id === product.id);
+        expect(isProductInList).toBe(true);
 
+        // Delete favorite from list
+        const deleteFavourite = await request.delete(`/favorites/${favoriteId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
 
-test('POST /favourites - store new favourite', async ({ request, token }) => {
-    //Get products
-    const productsResponse = await request.get('/products');
-    expect(productsResponse.status()).toBe(200);
+        expect(deleteFavourite.status()).toBe(204);
 
-    // Get first returned product
-    const product = (await productsResponse.json()).data[0];
-
-    // Add product to favourites
-    const response = await request.post('/favorites', {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-        data: {
-            product_id: product.id,
-        },
     });
-
-    expect(response.status()).toBe(201);
-
-    const favorite: NewFavoriteResponse = await response.json();
-
-    expect(favorite.product_id).toBeDefined();
-    expect(favorite.user_id).toBeDefined();
-    expect(favorite.id).toBeDefined();
-    
-    const favoriteId = favorite.id; 
-    
-    // Verify product is added to favourites
-
-    const favorites = await request.get('/favorites', {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-
-    expect(favorites.status()).toBe(200);
-
-    const favoritesList: FavoriteItem[] = await favorites.json();
-
-    const isProductInList = favoritesList.some(f => f.product_id === product.id);
-    expect(isProductInList).toBe(true);
-
-    // Delete favorite from list
-    const deleteFavourite = await request.delete(`/favorites/${favoriteId}`, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-
-    expect(deleteFavourite.status()).toBe(204);
-
 });
