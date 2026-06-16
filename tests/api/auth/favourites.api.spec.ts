@@ -20,6 +20,12 @@ interface FavoriteItem {
     product: Product
 }
 
+interface NewFavoriteResponse {
+    id: string
+    product_id: string
+    user_id: string
+}
+
 test('GET /favorites - retrieves all favourites', async ({ request, token }) => {
 
     const favorites = await request.get('/favorites', {
@@ -69,7 +75,7 @@ test('POST /favourites - store new favourite', async ({ request, token }) => {
 
     expect(response.status()).toBe(201);
 
-    const favorite = await response.json();
+    const favorite: NewFavoriteResponse = await response.json();
 
     expect(favorite.product_id).toBeDefined();
     expect(favorite.user_id).toBeDefined();
@@ -87,16 +93,9 @@ test('POST /favourites - store new favourite', async ({ request, token }) => {
 
     expect(favorites.status()).toBe(200);
 
-    const favoritesList = await favorites.json();
-    let isProductInList: boolean = false;
-
-    for (const favorite of favoritesList) {
-        if (favorite.product_id === product.id) {
-            isProductInList = true;
-            break;
-        }
-    };
-
+    const favoritesList: FavoriteItem[] = await favorites.json();
+    
+    const isProductInList = favoritesList.some(f => f.product_id === product.id);
     expect(isProductInList).toBe(true);
 
     // Delete favorite from list
