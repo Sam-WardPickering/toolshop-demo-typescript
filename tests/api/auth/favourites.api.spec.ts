@@ -69,6 +69,8 @@ test('POST /favourites - store new favourite', async ({ request, token }) => {
 
     expect(response.status()).toBe(200);
     
+    const favoriteId = (await response.json()).id; 
+    
     // Verify product is added to favourites
 
     const favorites = await request.get('/favorites');
@@ -80,12 +82,19 @@ test('POST /favourites - store new favourite', async ({ request, token }) => {
     for (const favorite of favoritesList) {
         if (favorite.id === product.id) {
             isProductInList = true;
-            return;
+            break;
         }
     };
 
     expect(isProductInList).toBe(true);
 
     // Delete favorite from list
+    const deleteFavourite = await request.delete(`/favorites/${favoriteId}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    expect(deleteFavourite.status()).toBe(204);
 
 });
