@@ -47,6 +47,16 @@ test.beforeAll(async ({ request, token }) => {
     seededFavoriteId = body.id;
 });
 
+
+test.afterAll(async ({ request, token }) => {
+    await request.delete(`/favorites/${seededFavoriteId}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+});
+
+
 test('GET /favorites - retrieves all favourites', async ({ request, token }) => {
 
     const favorites = await request.get('/favorites', {
