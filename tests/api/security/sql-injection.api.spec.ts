@@ -8,6 +8,6 @@ test('POST /users/login - SQL injection in email field', async ({ request }) => 
         },
     });
 
-    console.log(response.status());
-    console.log(await response.json());
+    expect(response.status()).toBe(401);
+    expect(await (await response.json()).error).toBe('Unauthorized');
 })
