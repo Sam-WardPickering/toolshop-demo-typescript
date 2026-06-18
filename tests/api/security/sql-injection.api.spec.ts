@@ -46,7 +46,7 @@ test.describe('POST /users/login', () => {
 });
 
 test.describe('GET /products/search', () => {
-    for (const payload in sqlInjectionPayloads) {
+    for (const payload of sqlInjectionPayloads) {
         test(`GET /products/search - SQL injection payload: ${payload}`, async ({ request }) => {
             const response = await request.get(`/products/search?q=${encodeURIComponent(payload)}`);
 
