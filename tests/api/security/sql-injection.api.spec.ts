@@ -46,10 +46,12 @@ test.describe('POST /users/login', () => {
 });
 
 test.describe('GET /products/search', () => {
-    test('GET /products/search - baseline search', async ({ request }) => {
-        const response = await request.get('/products/search?q=pliers');
+    for (const payload in sqlInjectionPayloads) {
+        test(`GET /products/search - SQL injection payload: ${payload}`, async ({ request }) => {
+            const response = await request.get(`/products/search?q=${encodeURIComponent(payload)}`);
 
-        console.log(response.status());
-        console.log(await response.json());
-    });
+            console.log(response.status());
+            console.log(await response.json());
+        });
+    };
 });
