@@ -9,5 +9,7 @@ test('POST /users/login - SQL injection in email field', async ({ request }) => 
     });
 
     expect(response.status()).toBe(401);
-    expect(await (await response.json()).error).toBe('Unauthorized');
+
+    const responseBody = await response.json();
+    expect(responseBody.error).toBe('Unauthorized');
 });
