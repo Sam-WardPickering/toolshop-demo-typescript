@@ -94,7 +94,7 @@ test.describe('Favorites', () => {
         expect(productsResponse.status()).toBe(200);
 
         // Get first returned product
-        const product = (await productsResponse.json()).data[0];
+        const product = (await productsResponse.json()).data[1];
 
         // Add product to favourites
         const response = await request.post('/favorites', {
