@@ -13,7 +13,7 @@ test.describe('POST /users/login', () => {
             const response = await request.post('/users/login', {
                 data: {
                     email: payload,
-                    password: 'welcome01',
+                    password: 'welcome02',
                 },
             });
 
@@ -26,9 +26,12 @@ test.describe('POST /users/login', () => {
 
     for (const payload of sqlInjectionPayloads) {
         test(`Password input - SQL injection payload: ${payload}`, async ({ request }) => {
+            // Deliberately a throwaway/non-existent account — these tests always fail
+            // to log in by design, so reusing a real account here risks locking it out
+            // for every other test in the suite.
             const response = await request.post('/users/login', {
                 data: {
-                    email: 'customer2@practicesoftwaretesting.com',
+                    email: 'sql-injection-throwaway@practicesoftwaretesting.com',
                     password: payload,
                 },
             });
@@ -39,12 +42,5 @@ test.describe('POST /users/login', () => {
             expect(responseBody.error).toBe('Unauthorized');
         });
     };
-    
+
 });
-
-
-
-
-
-
-

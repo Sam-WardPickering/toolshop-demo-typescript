@@ -12,8 +12,8 @@ interface LoginErrorResponse {
 test('POST /users/login - valid credentials returns token', async ({ request}) => {
     const response = await request.post('/users/login', {
         data: {
-            email: 'customer2@practicesoftwaretesting.com',
-            password: 'welcome01',
+            email: 'customer3@practicesoftwaretesting.com',
+            password: 'pass123',
         },
     });
 
@@ -29,7 +29,7 @@ test('POST /users/login - valid credentials returns token', async ({ request}) =
 test('POST /users/login - incorrect password', async ({ request}) => {
     const response = await request.post('/users/login', {
         data: {
-            email: 'customer2@practicesoftwaretesting.com',
+            email: 'customer3@practicesoftwaretesting.com',
             password: 'welcome67',
         },
     });
@@ -45,7 +45,7 @@ test('POST /users/login - incorrect email', async ({ request}) => {
     const response = await request.post('/users/login', {
         data: {
             email: 'incorrectemail@email.com',
-            password: 'welcome01'
+            password: 'pass123'
         },
     });
 
@@ -75,7 +75,7 @@ test('POST /users/login - invalid email format', async ({ request}) => {
     const response = await request.post('/users/login', {
         data: {
             email: 'notanemail!',
-            password: 'welcome01'
+            password: 'pass123'
         },
     });
 
