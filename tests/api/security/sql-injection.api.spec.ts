@@ -50,8 +50,11 @@ test.describe('GET /products/search', () => {
         test(`GET /products/search - SQL injection payload: ${payload}`, async ({ request }) => {
             const response = await request.get(`/products/search?q=${encodeURIComponent(payload)}`);
 
-            console.log(response.status());
-            console.log(await response.json());
+            expect(response.status()).toBe(200);
+
+            const responseBody = await response.json();
+            expect(responseBody.data).toEqual([]);
+            expect(responseBody.total).toBe(0);
         });
     };
 });
