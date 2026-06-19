@@ -5,12 +5,14 @@ export class LoginPage {
     readonly emailInput: Locator;
     readonly passwordInput: Locator;
     readonly submitButton: Locator;
+    readonly loginErrorMsgBox: Locator;
 
     constructor(page: Page) {
         this.page = page;
         this.emailInput = page.getByTestId('email');
         this.passwordInput = page.getByTestId('password');
         this.submitButton = page.getByTestId('login-submit');
+        this.loginErrorMsgBox = page.getByTestId('login-error');
     }
 
     async loginUser(email: string, password: string) {
