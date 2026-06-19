@@ -6,6 +6,9 @@ export default defineConfig({
   retries: 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
+  use: {
+    testIdAttribute: 'data-test',
+  },
 
   projects: [
     {
