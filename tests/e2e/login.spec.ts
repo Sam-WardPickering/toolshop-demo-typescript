@@ -22,3 +22,14 @@ test('Existing user cannot login with incorrect email', async ({ page }) => {
     await expect(loginPage.loginErrorMsgBox).toHaveText('Invalid email or password');
     await expect(page).toHaveURL(/login/);
 });
+
+test('Existing user cannot login with incorrect password', async ({ page }) => {
+    await page.goto('/auth/login');
+
+    const loginPage = new LoginPage(page);
+
+    await loginPage.loginUser(users.admin.email, 'wrongPassword67');
+
+    await expect(loginPage.loginErrorMsgBox).toHaveText('Invalid email or password');
+    await expect(page).toHaveURL(/login/);
+});
