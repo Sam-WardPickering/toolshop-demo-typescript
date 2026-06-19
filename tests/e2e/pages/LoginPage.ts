@@ -12,4 +12,10 @@ export class LoginPage {
         this.passwordInput = page.getByTestId('password');
         this.submitButton = page.getByTestId('login-submit');
     }
+
+    async loginUser(email: string, password: string) {
+        await this.emailInput.fill(email);
+        await this.passwordInput.fill(password);
+        await this.submitButton.click();
+    }
 }
