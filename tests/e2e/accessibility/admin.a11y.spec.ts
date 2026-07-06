@@ -6,137 +6,106 @@ import { users } from '../../test-data/users';
 
 const admin = users.admin;
 
-test('Admin Dashboard page has no critical or serious accessibility violations', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    await page.goto('/auth/login');
+test.describe('Admin pages accessibility', () => {
+    let loginPage: LoginPage;
 
-    await loginPage.loginUser(admin.email, admin.password);
+    test.beforeEach(async ({ page }) => {
+        loginPage = new LoginPage(page);
+        await page.goto('/auth/login');
+        await loginPage.loginUser(admin.email, admin.password);
+    });
 
-    await page.goto('/admin/dashboard');
+    test('Admin Dashboard page has no critical or serious accessibility violations', async ({ page }) => {
+        await page.goto('/admin/dashboard');
 
-    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+        const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
 
-    logNonBlockingViolations(accessibilityScanResults);
+        logNonBlockingViolations(accessibilityScanResults);
 
-    expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
-  
-});
-
-
-test('Admin Brands page has no critical or serious accessibility violations', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    await page.goto('/auth/login');
-
-    await loginPage.loginUser(admin.email, admin.password);
-
-    await page.goto('/admin/brands');
-
-    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
-
-    logNonBlockingViolations(accessibilityScanResults);
-
-    expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
-  
-});
+        expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
+    });
 
 
-test('Admin Categories page has no critical or serious accessibility violations', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    await page.goto('/auth/login');
+    test('Admin Brands page has no critical or serious accessibility violations', async ({ page }) => {
+        await page.goto('/admin/brands');
 
-    await loginPage.loginUser(admin.email, admin.password);
+        const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
 
-    await page.goto('/admin/categories');
+        logNonBlockingViolations(accessibilityScanResults);
 
-    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
-
-    logNonBlockingViolations(accessibilityScanResults);
-
-    expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
-  
-});
+        expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
+    
+    });
 
 
-test('Admin Products page has no critical or serious accessibility violations', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    await page.goto('/auth/login');
+    test('Admin Categories page has no critical or serious accessibility violations', async ({ page }) => {
+        await page.goto('/admin/categories');
 
-    await loginPage.loginUser(admin.email, admin.password);
+        const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
 
-    await page.goto('/admin/products');
+        logNonBlockingViolations(accessibilityScanResults);
 
-    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
-
-    logNonBlockingViolations(accessibilityScanResults);
-
-    expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
-  
-});
+        expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
+    
+    });
 
 
-test('Admin Orders page has no critical or serious accessibility violations', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    await page.goto('/auth/login');
+    test('Admin Products page has no critical or serious accessibility violations', async ({ page }) => {
+        await page.goto('/admin/products');
 
-    await loginPage.loginUser(admin.email, admin.password);
+        const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
 
-    await page.goto('/admin/orders');
+        logNonBlockingViolations(accessibilityScanResults);
 
-    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
-
-    logNonBlockingViolations(accessibilityScanResults);
-
-    expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
-  
-});
+        expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
+    
+    });
 
 
-test('Admin Users page has no critical or serious accessibility violations', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    await page.goto('/auth/login');
+    test('Admin Orders page has no critical or serious accessibility violations', async ({ page }) => {
+        await page.goto('/admin/orders');
 
-    await loginPage.loginUser(admin.email, admin.password);
+        const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
 
-    await page.goto('/admin/users');
+        logNonBlockingViolations(accessibilityScanResults);
 
-    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
-
-    logNonBlockingViolations(accessibilityScanResults);
-
-    expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
-  
-});
+        expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
+    
+    });
 
 
-test('Admin Messages page has no critical or serious accessibility violations', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    await page.goto('/auth/login');
+    test('Admin Users page has no critical or serious accessibility violations', async ({ page }) => {
+        await page.goto('/admin/users');
 
-    await loginPage.loginUser(admin.email, admin.password);
+        const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
 
-    await page.goto('/admin/messages');
+        logNonBlockingViolations(accessibilityScanResults);
 
-    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
-
-    logNonBlockingViolations(accessibilityScanResults);
-
-    expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
-  
-});
+        expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
+    
+    });
 
 
-test('Admin Settings page has no critical or serious accessibility violations', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    await page.goto('/auth/login');
+    test('Admin Messages page has no critical or serious accessibility violations', async ({ page }) => {
+        await page.goto('/admin/messages');
 
-    await loginPage.loginUser(admin.email, admin.password);
+        const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
 
-    await page.goto('/admin/settings');
+        logNonBlockingViolations(accessibilityScanResults);
 
-    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+        expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
+    
+    });
 
-    logNonBlockingViolations(accessibilityScanResults);
 
-    expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
-  
-});
+    test('Admin Settings page has no critical or serious accessibility violations', async ({ page }) => {
+        await page.goto('/admin/settings');
+
+        const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+
+        logNonBlockingViolations(accessibilityScanResults);
+
+        expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
+    
+    });
+})
