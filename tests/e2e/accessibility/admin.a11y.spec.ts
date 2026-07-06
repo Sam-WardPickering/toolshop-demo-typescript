@@ -4,11 +4,13 @@ import { getSeriousViolations, logNonBlockingViolations } from '../helpers/acces
 import { LoginPage } from '../pages';
 import { users } from '../../test-data/users';
 
+const admin = users.admin;
+
 test('Admin Dashboard page has no critical or serious accessibility violations', async ({ page }) => {
     const loginPage = new LoginPage(page);
     await page.goto('/auth/login');
 
-    await loginPage.loginUser(users.admin.email, users.admin.password);
+    await loginPage.loginUser(admin.email, admin.password);
 
     await page.goto('/admin/dashboard');
 
