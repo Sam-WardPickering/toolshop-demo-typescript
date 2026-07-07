@@ -26,7 +26,7 @@ test.describe('Public page accessibility', () => {
 
 
     test('Contact page has no critical or serious accessibility violations', async ({ page }) => {
-        await page.goto('/');
+        await page.goto('/contact');
 
         const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
 
@@ -34,4 +34,6 @@ test.describe('Public page accessibility', () => {
 
         expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
     });
+
+
 });
