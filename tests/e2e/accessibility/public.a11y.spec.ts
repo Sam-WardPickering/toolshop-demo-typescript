@@ -36,4 +36,58 @@ test.describe('Public page accessibility', () => {
     });
 
 
+    test('Category: Hand Tools page has no critical or serious accessibility violations', async ({ page }) => {
+        await page.goto('/category/hand-tools');
+
+        const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+
+        logNonBlockingViolations(accessibilityScanResults);
+
+        expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
+    });
+
+
+    test('Category: Power Tools page has no critical or serious accessibility violations', async ({ page }) => {
+        await page.goto('/category/power-tools');
+
+        const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+
+        logNonBlockingViolations(accessibilityScanResults);
+
+        expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
+    });
+
+
+    test('Category: Other page has no critical or serious accessibility violations', async ({ page }) => {
+        await page.goto('/category/other');
+
+        const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+
+        logNonBlockingViolations(accessibilityScanResults);
+
+        expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
+    });
+
+
+    test('Category: Special Tools page has no critical or serious accessibility violations', async ({ page }) => {
+        await page.goto('/category/special-tools');
+
+        const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+
+        logNonBlockingViolations(accessibilityScanResults);
+
+        expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
+    });
+
+
+    test('Rentals page has no critical or serious accessibility violations', async ({ page }) => {
+        await page.goto('/rentals');
+
+        const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+
+        logNonBlockingViolations(accessibilityScanResults);
+
+        expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
+    });
+
 });
