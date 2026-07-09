@@ -28,9 +28,7 @@ test.describe('Admin pages accessibility', () => {
     test('Admin Brands page has no critical or serious accessibility violations', async ({ page }) => {
         await page.goto('/admin/brands');
 
-       const accessibilityScanResults = await new AxeBuilder({ page })
-        .disableRules(['meta-refresh'])
-        .analyze();
+       const accessibilityScanResults = await runAxeScan(page, ['meta-refresh']);
 
         logNonBlockingViolations(accessibilityScanResults);
 
@@ -42,9 +40,7 @@ test.describe('Admin pages accessibility', () => {
     test('Admin Categories page has no critical or serious accessibility violations', async ({ page }) => {
         await page.goto('/admin/categories');
 
-       const accessibilityScanResults = await new AxeBuilder({ page })
-        .disableRules(['meta-refresh'])
-        .analyze();
+       const accessibilityScanResults = await runAxeScan(page, ['meta-refresh']);
 
         logNonBlockingViolations(accessibilityScanResults);
 
@@ -56,9 +52,7 @@ test.describe('Admin pages accessibility', () => {
     test('Admin Products page has no critical or serious accessibility violations', async ({ page }) => {
         await page.goto('/admin/products');
 
-       const accessibilityScanResults = await new AxeBuilder({ page })
-        .disableRules(['meta-refresh'])
-        .analyze();
+        const accessibilityScanResults = await runAxeScan(page, ['meta-refresh']);
 
         logNonBlockingViolations(accessibilityScanResults);
 
@@ -70,9 +64,7 @@ test.describe('Admin pages accessibility', () => {
     test('Admin Orders page has no critical or serious accessibility violations', async ({ page }) => {
         await page.goto('/admin/orders');
 
-       const accessibilityScanResults = await new AxeBuilder({ page })
-        .disableRules(['meta-refresh'])
-        .analyze();
+        const accessibilityScanResults = await runAxeScan(page, ['meta-refresh']);
 
         logNonBlockingViolations(accessibilityScanResults);
 
@@ -84,9 +76,7 @@ test.describe('Admin pages accessibility', () => {
     test('Admin Users page has no critical or serious accessibility violations', async ({ page }) => {
         await page.goto('/admin/users');
 
-       const accessibilityScanResults = await new AxeBuilder({ page })
-        .disableRules(['meta-refresh'])
-        .analyze();
+        const accessibilityScanResults = await runAxeScan(page, ['meta-refresh']);
 
         logNonBlockingViolations(accessibilityScanResults);
 
@@ -98,9 +88,7 @@ test.describe('Admin pages accessibility', () => {
     test('Admin Messages page has no critical or serious accessibility violations', async ({ page }) => {
         await page.goto('/admin/messages');
 
-       const accessibilityScanResults = await new AxeBuilder({ page })
-        .disableRules(['meta-refresh'])
-        .analyze();
+        const accessibilityScanResults = await runAxeScan(page, ['meta-refresh']);
 
         logNonBlockingViolations(accessibilityScanResults);
 
@@ -112,9 +100,7 @@ test.describe('Admin pages accessibility', () => {
     test('Admin Settings page has no critical or serious accessibility violations', async ({ page }) => {
         await page.goto('/admin/settings');
 
-       const accessibilityScanResults = await new AxeBuilder({ page })
-        .disableRules(['meta-refresh'])
-        .analyze();
+        const accessibilityScanResults = await runAxeScan(page, ['meta-refresh']);
 
         logNonBlockingViolations(accessibilityScanResults);
 
