@@ -1,6 +1,5 @@
 import { test , expect } from '@playwright/test';
-import AxeBuilder from '@axe-core/playwright';
-import { getSeriousViolations, logNonBlockingViolations } from '../helpers/accessibility';
+import { runAxeScan, getSeriousViolations, logNonBlockingViolations } from '../helpers/accessibility';
 import { LoginPage } from '../pages';
 import { users } from '../../test-data/users';
 
@@ -18,9 +17,7 @@ test.describe('Customer pages accessibility', () => {
     test('Customer Account page has no critical or serious accessibility violations', async ({ page }) => {
         await page.goto('/account');
 
-       const accessibilityScanResults = await new AxeBuilder({ page })
-        .disableRules(['meta-refresh'])
-        .analyze();
+        const accessibilityScanResults = await runAxeScan(page, ['meta-refresh']);
 
         logNonBlockingViolations(accessibilityScanResults);
 
@@ -31,9 +28,7 @@ test.describe('Customer pages accessibility', () => {
     test('Customer Favorites page has no critical or serious accessibility violations', async ({ page }) => {
         await page.goto('/account/favorites');
 
-       const accessibilityScanResults = await new AxeBuilder({ page })
-        .disableRules(['meta-refresh'])
-        .analyze();
+        const accessibilityScanResults = await runAxeScan(page, ['meta-refresh']);
 
         logNonBlockingViolations(accessibilityScanResults);
 
@@ -44,9 +39,7 @@ test.describe('Customer pages accessibility', () => {
     test('Customer Profile page has no critical or serious accessibility violations', async ({ page }) => {
         await page.goto('/account/profile');
 
-       const accessibilityScanResults = await new AxeBuilder({ page })
-        .disableRules(['meta-refresh'])
-        .analyze();
+        const accessibilityScanResults = await runAxeScan(page, ['meta-refresh']);
 
         logNonBlockingViolations(accessibilityScanResults);
 
@@ -57,9 +50,7 @@ test.describe('Customer pages accessibility', () => {
     test('Customer Invoice page has no critical or serious accessibility violations', async ({ page }) => {
         await page.goto('/account/invoices');
 
-       const accessibilityScanResults = await new AxeBuilder({ page })
-        .disableRules(['meta-refresh'])
-        .analyze();
+        const accessibilityScanResults = await runAxeScan(page, ['meta-refresh']);
 
         logNonBlockingViolations(accessibilityScanResults);
 
@@ -70,10 +61,8 @@ test.describe('Customer pages accessibility', () => {
     test('Customer Messages page has no critical or serious accessibility violations', async ({ page }) => {
         await page.goto('/account/messages');
 
-       const accessibilityScanResults = await new AxeBuilder({ page })
-        .disableRules(['meta-refresh'])
-        .analyze();
-        
+        const accessibilityScanResults = await runAxeScan(page, ['meta-refresh']);
+
         logNonBlockingViolations(accessibilityScanResults);
 
         expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
