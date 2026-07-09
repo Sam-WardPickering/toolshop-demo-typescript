@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
-import AxeBuilder from '@axe-core/playwright';
-import { getSeriousViolations, logNonBlockingViolations } from '../helpers/accessibility';
+import { runAxeScan, getSeriousViolations, logNonBlockingViolations } from '../helpers/accessibility';
 import { LoginPage } from '../pages';
 import { users } from '../../test-data/users';
 
@@ -18,9 +17,7 @@ test.describe('Admin pages accessibility', () => {
     test('Admin Dashboard page has no critical or serious accessibility violations', async ({ page }) => {
         await page.goto('/admin/dashboard');
 
-       const accessibilityScanResults = await new AxeBuilder({ page })
-        .disableRules(['meta-refresh'])
-        .analyze();
+       const accessibilityScanResults = await runAxeScan(page, ['meta-refresh']);
 
         logNonBlockingViolations(accessibilityScanResults);
 
@@ -118,7 +115,7 @@ test.describe('Admin pages accessibility', () => {
        const accessibilityScanResults = await new AxeBuilder({ page })
         .disableRules(['meta-refresh'])
         .analyze();
-        
+
         logNonBlockingViolations(accessibilityScanResults);
 
         expect(getSeriousViolations(accessibilityScanResults)).toEqual([]);
